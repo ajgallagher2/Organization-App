@@ -1,14 +1,14 @@
-const CACHE_NAME = 'reminders-v1';
+const CACHE_NAME = 'reminders-v2';
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/css/style.css',
-  '/js/reminders.js',
-  '/js/notifications.js',
-  '/js/app.js',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-  '/manifest.json',
+  './',
+  './index.html',
+  './css/style.css',
+  './js/reminders.js',
+  './js/notifications.js',
+  './js/app.js',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './manifest.json',
 ];
 
 // Install: cache all assets
@@ -44,7 +44,7 @@ self.addEventListener('notificationclick', (event) => {
       if (clients.length > 0) {
         return clients[0].focus();
       }
-      return self.clients.openWindow('/');
+      return self.clients.openWindow('./');
     })
   );
 });

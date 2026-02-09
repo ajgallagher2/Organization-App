@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#6C63FF">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Life Admin Reminders</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header id="app-header">
+    <div class="header-content">
+      <h1>Reminders</h1>
+      <button id="btn-settings" class="icon-btn" aria-label="Settings">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </button>
+    </div>
+    <p id="header-date" class="header-date"></p>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <!-- Today's Reminders -->
+    <section id="screen-home" class="screen active">
+      <div id="progress-bar" class="progress-bar">
+        <div id="progress-fill" class="progress-fill"></div>
+        <span id="progress-text" class="progress-text">0 / 0 done</span>
+      </div>
+      <div id="reminders-list" class="reminders-list"></div>
+      <div id="empty-state" class="empty-state hidden">
+        <div class="empty-icon">📋</div>
+        <p>No reminders for today</p>
+        <p class="empty-sub">Tap + to create your first reminder</p>
+      </div>
+    </section>
+
+    <!-- All Reminders -->
+    <section id="screen-all" class="screen">
+      <div id="all-reminders-list" class="reminders-list"></div>
+      <div id="all-empty-state" class="empty-state hidden">
+        <div class="empty-icon">🔔</div>
+        <p>No reminders yet</p>
+        <p class="empty-sub">Tap + to get started</p>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section id="screen-settings" class="screen">
+      <div class="settings-group">
+        <h3>Notifications</h3>
+        <div class="setting-row" id="notification-setting">
+          <span>Push Notifications</span>
+          <button id="btn-enable-notifications" class="setting-btn">Enable</button>
+        </div>
+      </div>
+      <div class="settings-group">
+        <h3>Data</h3>
+        <div class="setting-row">
+          <span>Reset all reminders</span>
+          <button id="btn-reset" class="setting-btn danger">Reset</button>
+        </div>
+        <div class="setting-row">
+          <span>Load preset reminders</span>
+          <button id="btn-load-presets" class="setting-btn">Load</button>
+        </div>
+      </div>
+      <div class="settings-group">
+        <h3>About</h3>
+        <p class="setting-info">Life Admin Reminders v1.0</p>
+        <p class="setting-info">A PWA to keep you on track with daily tasks.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav id="bottom-nav">
+    <button class="nav-btn active" data-screen="home">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>Today</span>
+    </button>
+    <button class="nav-btn" data-screen="all">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+      </svg>
+      <span>All</span>
+    </button>
+    <button id="btn-add" class="nav-btn add-btn">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+    </button>
+    <button class="nav-btn" data-screen="settings">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+      <span>Settings</span>
+    </button>
+  </nav>
+
+  <!-- Add/Edit Reminder Panel -->
+  <div id="panel-overlay" class="panel-overlay hidden"></div>
+  <div id="add-panel" class="add-panel hidden">
+    <div class="panel-handle"></div>
+    <h2 id="panel-title">New Reminder</h2>
+
+    <form id="reminder-form">
+      <input type="hidden" id="edit-id" value="">
+
+      <!-- Category Selection -->
+      <label class="form-label">Category</label>
+      <div id="category-grid" class="category-grid"></div>
+
+      <!-- Custom name (shown when custom is selected or always editable) -->
+      <label class="form-label" for="reminder-name">Name</label>
+      <input type="text" id="reminder-name" class="form-input" placeholder="e.g. Walk the dog" maxlength="50">
+
+      <!-- Time -->
+      <label class="form-label" for="reminder-time">Time</label>
+      <input type="time" id="reminder-time" class="form-input" value="09:00">
+
+      <!-- Recurrence -->
+      <label class="form-label">Repeat</label>
+      <div class="recurrence-options">
+        <button type="button" class="rec-btn active" data-rec="daily">Daily</button>
+        <button type="button" class="rec-btn" data-rec="specific_days">Days</button>
+        <button type="button" class="rec-btn" data-rec="weekly">Weekly</button>
+        <button type="button" class="rec-btn" data-rec="monthly">Monthly</button>
+      </div>
+
+      <!-- Day picker (for specific_days and weekly) -->
+      <div id="day-picker" class="day-picker hidden">
+        <button type="button" class="day-btn" data-day="0">S</button>
+        <button type="button" class="day-btn" data-day="1">M</button>
+        <button type="button" class="day-btn" data-day="2">T</button>
+        <button type="button" class="day-btn" data-day="3">W</button>
+        <button type="button" class="day-btn" data-day="4">T</button>
+        <button type="button" class="day-btn" data-day="5">F</button>
+        <button type="button" class="day-btn" data-day="6">S</button>
+      </div>
+
+      <!-- Month day picker -->
+      <div id="month-day-picker" class="month-day-picker hidden">
+        <label class="form-label" for="month-day">Day of month</label>
+        <input type="number" id="month-day" class="form-input" min="1" max="31" value="1">
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="button" id="btn-cancel" class="btn btn-secondary">Cancel</button>
+        <button type="button" id="btn-delete" class="btn btn-danger hidden">Delete</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="js/reminders.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
